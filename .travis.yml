@@ -1,0 +1,27 @@
+language: python
+
+matrix:
+  fast_finish: true
+  include:
+    - python: 3.6
+    - python: 3.7
+      dist: xenial
+      sudo: true
+
+install:
+  - pip install poetry
+  - poetry install
+  - poetry develop
+
+script:
+  - poetry run pytest
+  - poetry run mypy flake8_eradicate.py
+
+after_success:
+  - pip install coveralls
+  - coveralls
+
+notifications:
+  email:
+    on_success: never
+    on_failure: change
