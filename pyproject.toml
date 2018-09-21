@@ -39,6 +39,7 @@ E8 = "flake8_eradicate:Checker"
 python = "^3.6 || ^3.7"
 flake8 = "^3.5"
 eradicate = "^0.2.1"
+attrs = "^18.2.0"
 
 [tool.poetry.dev-dependencies]
 pytest-cov = "^2.6"
