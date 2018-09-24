@@ -27,6 +27,32 @@ So, we ignore `--aggressive` option from `eradicate`.
 |:----------:|:------------------------:|
 |    E800    | Found commented out code |
 
+## Output example
+
+```terminal
+» flake8 tests/fixtures/incorrect.py
+tests/fixtures/incorrect.py:1:1: E800: Found commented out code:
+--- before/tests/fixtures/incorrect.py
++++ after/tests/fixtures/incorrect.py
+@@ -1,16 +1,10 @@
+
+ class Some(object):
+-    # property_name = 1
+     other_property = 2
+
+
+-# def function_name():
+-#     return None
+
+
+-# class CommentedClass(object):
+ #     def __init__(self) -> None:
+-#         self.property = None
+
+ #     def __str__(self) -> str:
+-#         return self.__class__.__name__
+```
+
 ## License
 
 MIT.
