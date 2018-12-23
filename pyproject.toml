@@ -38,7 +38,7 @@ E8 = "flake8_eradicate:Checker"
 [tool.poetry.dependencies]
 python = "^3.6 || ^3.7"
 flake8 = "^3.5"
-eradicate = "^0.2.1"
+eradicate = ">=0.2.1,<1.1.0"
 attrs = "^18.2.0"
 
 [tool.poetry.dev-dependencies]
