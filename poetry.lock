@@ -320,7 +320,7 @@ description = "pytest: simple powerful testing with Python"
 name = "pytest"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
-version = "3.8.0"
+version = "4.0.2"
 
 [package.dependencies]
 atomicwrites = ">=1.0"
@@ -404,7 +404,7 @@ python-versions = "*"
 version = "1.1.1"
 
 [metadata]
-content-hash = "fa8df81ae088eb9a15b98e212e2a38e3ec9a778dfdfce1d2e9b21da3a1d74b86"
+content-hash = "4646ae68cd57ad6e30fb5267123b079616bb050d7c3d0b9fd6c046147894f237"
 python-versions = "^3.6 || ^3.7"
 
 [metadata.hashes]
@@ -439,7 +439,7 @@ py = ["bf92637198836372b520efcba9e020c330123be8ce527e535d185ed4b6f45694", "e7682
 pycodestyle = ["682256a5b318149ca0d2a9185d365d8864a768a28db66a84a2ea946bcc426766", "6c4245ade1edfad79c3446fadfc96b0de2759662dc29d07d80a6f27ad1ca6ba9"]
 pydocstyle = ["2258f9b0df68b97bf3a6c29003edc5238ff8879f1efb6f1999988d934e432bd8", "5741c85e408f9e0ddf873611085e819b809fca90b619f5fd7f34bd4959da3dd4", "ed79d4ec5e92655eccc21eb0c6cf512e69512b4a97d215ace46d17e4990f2039"]
 pyflakes = ["08bd6a50edf8cffa9fa09a463063c425ecaaf10d1eb0335a7e8b1401aef89e6f", "8d616a382f243dbf19b54743f280b80198be0bca3a5396f1d2e1fca6223e8805"]
-pytest = ["453cbbbe5ce6db38717d282b758b917de84802af4288910c12442984bde7b823", "a8a07f84e680482eb51e244370aaf2caa6301ef265f37c2bdefb3dd3b663f99d"]
+pytest = ["f689bf2fc18c4585403348dd56f47d87780bf217c53ed9ae7a3e2d7faa45f8e9", "f812ea39a0153566be53d88f8de94839db1e8a05352ed8a49525d7d7f37861e9"]
 pytest-cov = ["513c425e931a0344944f84ea47f3956be0e416d95acbd897a44970c8d926d5d7", "e360f048b7dae3f2f2a9a4d067b2dd6b6a015d384d1577c994a43f3f7cbad762"]
 pytest-flake8 = ["4f30f5be3efb89755f38f11bdb2a5e22d19a6f5faa73428f703a3292a9572cd3", "c740ad6aa19e3958947d2118f70bed218caf1d2097039fb7318573a2a72f89a1"]
 pytest-isort = ["2221c0914dfca41914625a646f0d2d1d4c676861b9a7b26746a7fdd40aa2c59b", "c70d0f900f4647bb714f0843dd82d7f7b759904006de31254efdb72ce88e0c0e"]
