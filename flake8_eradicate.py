@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 
 from io import StringIO
-from typing import Generator, Tuple
+from typing import Any, Generator, Tuple
 
 import attr
 import pkg_resources
 from eradicate import fix_file
+from flake8.options.manager import OptionManager
 
 pkg_name = 'flake8-eradicate'
 
@@ -30,6 +31,8 @@ class Checker(object):
     version = pkg_version
     _error_template = 'E800: Found commented out code:\n{0}'
 
+    options: Any  # type: ignore
+
     def __init__(self, tree, filename: str = STDIN) -> None:
         """
         Creates new checker instance.
@@ -45,6 +48,33 @@ class Checker(object):
     def _error(self, traceback: str) -> str:
         return self._error_template.format(traceback)
 
+    @classmethod
+    def add_options(cls, parser: OptionManager) -> None:
+        """
+        ``flake8`` api method to register new plugin options.
+
+        See :class:`.Configuration` docs for detailed options reference.
+
+        Arguments:
+            parser: ``flake8`` option parser instance.
+
+        """
+        parser.add_option(
+            '--eradicate-aggressive',
+            default=False,
+            help=(
+                'Enables aggressive mode for eradicate; '
+                'this may result in false positives'
+            ),
+            action='store_true',
+            type=None,
+        )
+
+    @classmethod
+    def parse_options(cls, options) -> None:
+        """Parses registered options for providing them to each visitor."""
+        cls.options = options
+
     def run(self) -> Generator[Tuple[int, int, str, type], None, None]:
         """
         Runs the checker.
@@ -54,7 +84,8 @@ class Checker(object):
         """
         if self.filename != STDIN:
             buffer = StringIO()
-            fix_file(self.filename, _Options(), buffer)
+            options = _Options(aggressive=self.options.eradicate_aggressive)
+            fix_file(self.filename, options, buffer)
             traceback = buffer.getvalue()
 
             if traceback:

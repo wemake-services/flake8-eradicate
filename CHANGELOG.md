@@ -3,6 +3,14 @@
 We follow Semantic Versions since the `0.1.0` release.
 
 
+## Version 0.2.0
+
+### Features
+
+- Adds `aggressive` configuration option
+- Upgrades `eradicate` to `1.0`
+
+
 ## Version 0.1.2
 
 ### Misc
