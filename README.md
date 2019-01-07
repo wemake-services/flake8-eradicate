@@ -29,7 +29,7 @@ So, we ignore `--aggressive` option from `eradicate`.
 
 ## Output example
 
-```terminal
+```diff
 » flake8 tests/fixtures/incorrect.py
 tests/fixtures/incorrect.py:1:1: E800: Found commented out code:
 --- before/tests/fixtures/incorrect.py
