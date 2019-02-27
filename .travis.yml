@@ -14,8 +14,9 @@ install:
   - poetry develop
 
 script:
-  - poetry run pytest
+  - poetry run flake8 flake8_eradicate.py tests
   - poetry run mypy flake8_eradicate.py
+  - poetry run pytest
 
 after_success:
   - pip install coveralls

@@ -3,6 +3,17 @@
 We follow Semantic Versions since the `0.1.0` release.
 
 
+## WIP (0.2.1)
+
+### Features
+
+- Updates to `flake8 >= 3.7`
+
+### Misc
+
+- Changes how we use `flake8`, moves from `pytest-flake8` to native CLI
+
+
 ## Version 0.2.0
 
 ### Features

@@ -29,15 +29,51 @@ So, we ignore `--aggressive` option from `eradicate`.
 
 ## Output example
 
+### Without aggressive mode
+
 ```diff
 » flake8 tests/fixtures/incorrect.py
 tests/fixtures/incorrect.py:1:1: E800: Found commented out code:
 --- before/tests/fixtures/incorrect.py
 +++ after/tests/fixtures/incorrect.py
-@@ -1,16 +1,10 @@
+@@ -1,23 +1,16 @@
 
  class Some(object):
 -    # property_name = 1
+-    # typed_property: int = 10
+     other_property = 2
+
+
+ # def function_name():
+-#     return None
+
+
+ # class CommentedClass(object):
+ #     def __init__(self, prop: int) -> None:
+-#         self.property = prop
+
+ #     def __str__(self) -> str:
+-#         return self.__class__.__name__
+
+ #    def set_prop(self, prop: int):
+-#        self.prop = prop
+
+ #    def get_prop(self):
+-#        return self.prop
+```
+
+### With aggresive mode
+
+```diff
+» flake8 --eradicate-aggressive tests/fixtures/incorrect.py
+tests/fixtures/incorrect.py:1:1: E800: Found commented out code:
+--- before/tests/fixtures/incorrect.py
++++ after/tests/fixtures/incorrect.py
+@@ -1,23 +1,10 @@
+
+ class Some(object):
+-    # property_name = 1
+-    # typed_property: int = 10
      other_property = 2
 
 
@@ -46,11 +82,17 @@ tests/fixtures/incorrect.py:1:1: E800: Found commented out code:
 
 
 -# class CommentedClass(object):
- #     def __init__(self) -> None:
--#         self.property = None
+-#     def __init__(self, prop: int) -> None:
+-#         self.property = prop
 
- #     def __str__(self) -> str:
+-#     def __str__(self) -> str:
 -#         return self.__class__.__name__
+
+-#    def set_prop(self, prop: int):
+-#        self.prop = prop
+
+-#    def get_prop(self):
+-#        return self.prop
 ```
 
 ## License
