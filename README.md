@@ -18,8 +18,9 @@ pip install flake8-eradicate
 Run your `flake8` checker [as usual](http://flake8.pycqa.org/en/latest/user/invocation.html).
 Commented code should raise an error.
 
-We prefer not to raise a warning than to raise a false positive.
-So, we ignore `--aggressive` option from `eradicate`.
+## Options
+
+- `--eradicate-aggressive` to enable aggressive mode from `eradicate`, can lead to false positives
 
 ## Error codes
 
