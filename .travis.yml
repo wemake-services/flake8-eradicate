@@ -13,6 +13,8 @@ before_install:
   - curl -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py | python
   - source "$HOME/.poetry/env"
 
+install: poetry install
+
 script:
   - poetry run flake8 .
   - poetry run mypy flake8_eradicate.py
