@@ -8,15 +8,18 @@ matrix:
       dist: xenial
       sudo: true
 
-install:
-  - pip install poetry
-  - poetry install
-  - poetry develop
+before_install:
+  - pip freeze | xargs pip uninstall -y
+  - curl -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py | python
+  - source "$HOME/.poetry/env"
 
 script:
-  - poetry run flake8 flake8_eradicate.py tests
+  - poetry run flake8 .
   - poetry run mypy flake8_eradicate.py
   - poetry run pytest
+  - poetry check
+	- poetry run pip check
+	- poetry run safety check --bare --full-report
 
 after_success:
   - pip install coveralls

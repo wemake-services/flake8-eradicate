@@ -3,11 +3,13 @@
 We follow Semantic Versions since the `0.1.0` release.
 
 
-## WIP (0.2.1)
+## 0.2.1
 
 ### Features
 
 - Updates to `flake8 >= 3.7`
+- Updates `attrs < 20`
+- Fixes plugin to work with `stdin`
 
 ### Misc
 

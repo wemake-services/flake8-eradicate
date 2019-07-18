@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
 
-from io import StringIO
-from typing import Any, Generator, Tuple
+from typing import Any, Iterable, Tuple
 
 import attr
 import pkg_resources
-from eradicate import fix_file
+from eradicate import filter_commented_out_code
 from flake8.options.manager import OptionManager
 
 pkg_name = 'flake8-eradicate'
@@ -29,21 +28,18 @@ class Checker(object):
 
     name = pkg_name
     version = pkg_version
-    _error_template = 'E800: Found commented out code:\n{0}'
+    _error_template = 'E800: Found commented out code'
 
     options: Any  # type: ignore
 
-    def __init__(self, tree, filename: str = STDIN) -> None:
+    def __init__(self, physical_line) -> None:
         """
         Creates new checker instance.
 
-        We only need a filename, since ``eradicate`` has its own logic to read
-        file contents. And it is unhandy to pass it.
-        But, without ``tree`` argument ``flake8`` does not call this plugin.
-
         When performance will be an issue - we can refactor it.
         """
-        self.filename = filename
+        self._physical_line = physical_line
+        self._options = _Options(aggressive=self.options.eradicate_aggressive)
 
     def _error(self, traceback: str) -> str:
         return self._error_template.format(traceback)
@@ -75,18 +71,14 @@ class Checker(object):
         """Parses registered options for providing them to each visitor."""
         cls.options = options
 
-    def run(self) -> Generator[Tuple[int, int, str, type], None, None]:
-        """
-        Runs the checker.
+    def __iter__(self) -> Iterable[Tuple[int, str]]:
+        """Runs on each step of flake8."""
+        if not self._is_equal_source():
+            yield (1, self._error_template)
 
-        ``fix_file()`` only mutates the buffer object.
-        It is the only way to find out if some error happened.
-        """
-        if self.filename != STDIN:
-            buffer = StringIO()
-            options = _Options(aggressive=self.options.eradicate_aggressive)
-            fix_file(self.filename, options, buffer)
-            traceback = buffer.getvalue()
+    def _is_equal_source(self) -> bool:
+        filtered_source = ''.join(filter_commented_out_code(
+            self._physical_line, self._options,
+        ))
 
-            if traceback:
-                yield 1, 0, self._error(traceback), type(self)
+        return self._physical_line == filtered_source
