@@ -17,8 +17,8 @@ script:
   - poetry run mypy flake8_eradicate.py
   - poetry run pytest
   - poetry check
-	- poetry run pip check
-	- poetry run safety check --bare --full-report
+  - poetry run pip check
+  - poetry run safety check --bare --full-report
 
 after_success:
   - pip install coveralls
