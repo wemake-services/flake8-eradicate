@@ -3,6 +3,13 @@
 We follow Semantic Versions since the `0.1.0` release.
 
 
+## 0.2.2
+
+### Bugfixes
+
+- Now `eradicate-aggressive` is parsed from config
+
+
 ## 0.2.1
 
 ### Features

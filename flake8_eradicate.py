@@ -64,6 +64,7 @@ class Checker(object):
             ),
             action='store_true',
             type=None,
+            parse_from_config=True,
         )
 
     @classmethod
