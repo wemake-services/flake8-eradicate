@@ -63,7 +63,6 @@ class Checker(object):
                 'this may result in false positives'
             ),
             action='store_true',
-            type=None,
             parse_from_config=True,
         )
 
