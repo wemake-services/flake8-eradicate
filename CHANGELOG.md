@@ -3,6 +3,13 @@
 We follow Semantic Versions since the `0.1.0` release.
 
 
+## 0.2.3
+
+### Bugfixes
+
+- Fixed `argparse` bug, see [#76](https://github.com/sobolevn/flake8-eradicate/issues/76)
+
+
 ## 0.2.2
 
 ### Bugfixes

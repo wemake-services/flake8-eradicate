@@ -5,7 +5,7 @@ build-backend = "poetry.masonry.api"
 
 [tool.poetry]
 name = "flake8-eradicate"
-version = "0.2.2"
+version = "0.2.3"
 description = "Flake8 plugin to find commented out code"
 
 license = "MIT"
@@ -14,7 +14,7 @@ authors = [
   "Nikita Sobolev <mail@sobolevn.me>"
 ]
 
-readme = "README.md"  # Markdown files are supported
+readme = "README.md"
 
 repository = "https://github.com/sobolevn/flake8-eradicate"
 homepage = "https://github.com/sobolevn/flake8-eradicate"
