@@ -189,7 +189,7 @@ description = "flake8 plugin that integrates isort ."
 name = "flake8-isort"
 optional = false
 python-versions = "*"
-version = "2.7.0"
+version = "2.8.0"
 
 [package.dependencies]
 flake8 = ">=3.2.1"
@@ -579,7 +579,7 @@ python-versions = ">=2.7"
 version = "0.5.1"
 
 [metadata]
-content-hash = "ac38d46651de4480b9eac621c422b242c326027b3e87f8e099dae4dd19139066"
+content-hash = "ac89a0c5404b15e9ed447a91b7e3077401837d478aa4174562a009742a18bedb"
 python-versions = "^3.6 || ^3.7"
 
 [metadata.hashes]
@@ -601,7 +601,7 @@ flake8-commas = ["d3005899466f51380387df7151fb59afec666a0f4f4a2c6a8995b975de0f44
 flake8-comprehensions = ["6de428c3ac67d3614d527456469c8a3d6638960e9ad7e1222358526a2507400a", "e3a8350a35d7bc71f8a1f64cf3c633a418a26b0edace2219d26ea4dd78ac21f3"]
 flake8-debugger = ["712d7c1ff69ddf3f0130e94cc88c2519e720760bce45e8c330bfdcb61ab4090d"]
 flake8-docstrings = ["3d5a31c7ec6b7367ea6506a87ec293b94a0a46c0bce2bb4975b7f1d09b6f3717", "a256ba91bc52307bef1de59e2a009c3cf61c3d0952dbe035d6ff7208940c2edc"]
-flake8-isort = ["1e67b6b90a9b980ac3ff73782087752d406ce0a729ed928b92797f9fa188917e", "81a8495eefed3f2f63f26cd2d766c7b1191e923a15b9106e6233724056572c68"]
+flake8-isort = ["64454d1f154a303cfe23ee715aca37271d4f1d299b2f2663f45b73bff14e36a9", "aa0c4d004e6be47e74f122f5b7f36554d0d78ad8bf99b497a460dedccaa7cce9"]
 flake8-pep3101 = ["493821d6bdd083794eb0691ebe5b68e5c520b622b269d60e54308fb97440e21a", "b661ab718df42b87743dde266ef5de4f9e900b56c67dbccd45d24cf527545553"]
 flake8-polyfill = ["12be6a34ee3ab795b19ca73505e7b55826d5f6ad7230d31b18e106400169b9e9", "e44b087597f6da52ec6393a709e7108b2905317d0c0b744cdca6208e670d8eda"]
 flake8-print = ["324f9e59a522518daa2461bacd7f82da3c34eb26a4314c2a54bd493f8b394a68"]
