@@ -34,3 +34,21 @@ class Some(object):
 
         # Some logics: count(numbers) or print(False)
         print(12 + 23 / 3)
+
+
+def some_function():
+    """
+    Test for noqa comments in docstrings.
+
+    This function has a multi-line doc string, but no return value is
+    stipulated, while the function defines a return. This would raise DAR201
+    flake8 violation. To suppress this raise violation the following noqa
+    comment is defined in the docstring.
+
+    # noqa: DAR201
+
+    This noqa comment should not be detected as commented out code. `eradicate`
+    itself does not raise this as a violation.
+
+    """
+    return "something"
