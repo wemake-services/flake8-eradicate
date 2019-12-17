@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import tokenize
 from typing import Any, Iterable, Tuple
 
 import attr
@@ -32,13 +33,14 @@ class Checker(object):
 
     options: Any  # type: ignore
 
-    def __init__(self, physical_line) -> None:
+    def __init__(self, physical_line, tokens) -> None:
         """
         Creates new checker instance.
 
         When performance will be an issue - we can refactor it.
         """
         self._physical_line = physical_line
+        self._tokens = tokens
         self._options = _Options(aggressive=self.options.eradicate_aggressive)
 
     def _error(self, traceback: str) -> str:
@@ -77,8 +79,22 @@ class Checker(object):
             yield (1, self._error_template)
 
     def _is_equal_source(self) -> bool:
-        filtered_source = ''.join(filter_commented_out_code(
-            self._physical_line, self._options,
-        ))
+        """
+        Check eradicate removes commented out code from line.
 
-        return self._physical_line == filtered_source
+        This check is only necessary when the physical line contains a comment.
+        The existence of comments is tested with the tokens of the physical
+        line.
+
+        """
+        comment_in_line: bool = False
+        for token_type, _, _, _, _ in self._tokens:
+            if token_type == tokenize.COMMENT:
+                comment_in_line = True
+                break
+        if comment_in_line:
+            filtered_source = ''.join(filter_commented_out_code(
+                self._physical_line, self._options,
+            ))
+            return self._physical_line == filtered_source
+        return True
