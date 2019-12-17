@@ -46,7 +46,7 @@ We use `mypy` to run type checks on our code.
 To use it:
 
 ```bash
-mypy wemake_python_styleguide
+mypy flake8_eradicate.py
 ```
 
 This step is mandatory during the CI.
