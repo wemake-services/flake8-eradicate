@@ -75,16 +75,22 @@ class Checker(object):
 
     def __iter__(self) -> Iterable[Tuple[int, str]]:
         """Runs on each step of flake8."""
-        if not self._is_equal_source():
+        if self._contains_commented_out_code():
             yield (1, self._error_template)
 
-    def _is_equal_source(self) -> bool:
+    def _contains_commented_out_code(self) -> bool:
         """
-        Check eradicate removes commented out code from line.
+        Check if the current physical line contains commented out code.
 
-        This check is only necessary when the physical line contains a comment.
-        The existence of comments is tested with the tokens of the physical
-        line.
+        This test relies on eradicate function to remove commented out code
+        from a physical line.
+
+        Physical lines might appear like commented code although they are part
+        of a multi-line docstring (e.g. a `# noqa: DAR201` comment to suppress
+        flake8 warning about missing returns in the docstring).
+        To prevent this false-positive, the tokens of the physical line are
+        checked for a comment. The eradicate function is only invokes,
+        when the tokens indicate a comment in the physical line.
 
         """
         comment_in_line: bool = False
@@ -96,5 +102,5 @@ class Checker(object):
             filtered_source = ''.join(filter_commented_out_code(
                 self._physical_line, self._options,
             ))
-            return self._physical_line == filtered_source
-        return True
+            return self._physical_line != filtered_source
+        return False
