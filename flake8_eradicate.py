@@ -93,7 +93,7 @@ class Checker(object):
         when the tokens indicate a comment in the physical line.
 
         """
-        comment_in_line: bool = False
+        comment_in_line = False
         for token_type, _, _, _, _ in self._tokens:
             if token_type == tokenize.COMMENT:
                 comment_in_line = True
