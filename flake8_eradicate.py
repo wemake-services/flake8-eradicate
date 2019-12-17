@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import tokenize
 from typing import Any, Iterable, Tuple
 
 import attr
@@ -32,13 +33,14 @@ class Checker(object):
 
     options: Any  # type: ignore
 
-    def __init__(self, physical_line) -> None:
+    def __init__(self, physical_line, tokens) -> None:
         """
         Creates new checker instance.
 
         When performance will be an issue - we can refactor it.
         """
         self._physical_line = physical_line
+        self._tokens = tokens
         self._options = _Options(aggressive=self.options.eradicate_aggressive)
 
     def _error(self, traceback: str) -> str:
@@ -73,12 +75,32 @@ class Checker(object):
 
     def __iter__(self) -> Iterable[Tuple[int, str]]:
         """Runs on each step of flake8."""
-        if not self._is_equal_source():
+        if self._contains_commented_out_code():
             yield (1, self._error_template)
 
-    def _is_equal_source(self) -> bool:
-        filtered_source = ''.join(filter_commented_out_code(
-            self._physical_line, self._options,
-        ))
+    def _contains_commented_out_code(self) -> bool:
+        """
+        Check if the current physical line contains commented out code.
 
-        return self._physical_line == filtered_source
+        This test relies on eradicate function to remove commented out code
+        from a physical line.
+
+        Physical lines might appear like commented code although they are part
+        of a multi-line docstring (e.g. a `# noqa: DAR201` comment to suppress
+        flake8 warning about missing returns in the docstring).
+        To prevent this false-positive, the tokens of the physical line are
+        checked for a comment. The eradicate function is only invokes,
+        when the tokens indicate a comment in the physical line.
+
+        """
+        comment_in_line = False
+        for token_type, _, _, _, _ in self._tokens:
+            if token_type == tokenize.COMMENT:
+                comment_in_line = True
+                break
+        if comment_in_line:
+            filtered_source = ''.join(filter_commented_out_code(
+                self._physical_line, self._options,
+            ))
+            return self._physical_line != filtered_source
+        return False
