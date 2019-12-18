@@ -5,7 +5,7 @@ build-backend = "poetry.masonry.api"
 
 [tool.poetry]
 name = "flake8-eradicate"
-version = "0.2.3"
+version = "0.2.4"
 description = "Flake8 plugin to find commented out code"
 
 license = "MIT"

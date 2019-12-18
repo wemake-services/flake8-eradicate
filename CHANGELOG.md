@@ -3,6 +3,13 @@
 We follow Semantic Versions since the `0.1.0` release.
 
 
+## 0.2.4
+
+### Bugfixes
+
+- Fixes that some lines inside the docstrings were marked as commented out code
+
+
 ## 0.2.3
 
 ### Bugfixes
