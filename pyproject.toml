@@ -5,7 +5,7 @@ build-backend = "poetry.masonry.api"
 
 [tool.poetry]
 name = "flake8-eradicate"
-version = "0.2.4"
+version = "0.3.0"
 description = "Flake8 plugin to find commented out code"
 
 license = "MIT"
@@ -41,10 +41,11 @@ classifiers = [
 E8 = "flake8_eradicate:Checker"
 
 [tool.poetry.dependencies]
-python = "^3.6 || ^3.7"
+python = "^3.6"
+
 flake8 = "^3.5"
-eradicate = ">=0.2.1,<1.1.0"
-attrs = ">=18.2,<20.0"
+eradicate = "^1.0"
+attrs = "*"
 
 [tool.poetry.dev-dependencies]
 pytest-cov = "^2.8"

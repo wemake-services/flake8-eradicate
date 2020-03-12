@@ -8,6 +8,7 @@ import pkg_resources
 from eradicate import filter_commented_out_code
 from flake8.options.manager import OptionManager
 
+#: This is a name that we use to install this library:
 pkg_name = 'flake8-eradicate'
 
 #: We store the version number inside the `pyproject.toml`:
@@ -93,14 +94,15 @@ class Checker(object):
         when the tokens indicate a comment in the physical line.
 
         """
-        comment_in_line = False
-        for token_type, _, _, _, _ in self._tokens:
-            if token_type == tokenize.COMMENT:
-                comment_in_line = True
-                break
+        comment_in_line = any(
+            token_type == tokenize.COMMENT
+            for token_type, _, _, _, _ in self._tokens
+        )
+
         if comment_in_line:
             filtered_source = ''.join(filter_commented_out_code(
-                self._physical_line, self._options,
+                self._physical_line,
+                self._options,
             ))
             return self._physical_line != filtered_source
         return False
