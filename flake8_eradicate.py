@@ -44,9 +44,6 @@ class Checker(object):
         self._tokens = tokens
         self._options = _Options(aggressive=self.options.eradicate_aggressive)
 
-    def _error(self, traceback: str) -> str:
-        return self._error_template.format(traceback)
-
     @classmethod
     def add_options(cls, parser: OptionManager) -> None:
         """
