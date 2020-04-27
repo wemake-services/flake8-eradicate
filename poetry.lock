@@ -70,13 +70,13 @@ category = "dev"
 description = "A parser for Python dependency files"
 name = "dparse"
 optional = false
-python-versions = "*"
-version = "0.4.1"
+python-versions = ">=3.5"
+version = "0.5.1"
 
 [package.dependencies]
 packaging = "*"
 pyyaml = "*"
-six = "*"
+toml = "*"
 
 [package.extras]
 pipenv = ["pipenv"]
@@ -548,15 +548,15 @@ socks = ["PySocks (>=1.5.6,<1.5.7 || >1.5.7)", "win-inet-pton"]
 
 [[package]]
 category = "dev"
-description = "Safety checks your installed dependencies for known security vulnerabilities."
+description = "Checks installed dependencies for known vulnerabilities."
 name = "safety"
 optional = false
-python-versions = "*"
-version = "1.8.7"
+python-versions = ">=3.5"
+version = "1.9.0"
 
 [package.dependencies]
 Click = ">=6.0"
-dparse = ">=0.4.1"
+dparse = ">=0.5.1"
 packaging = "*"
 requests = "*"
 setuptools = "*"
@@ -649,7 +649,7 @@ docs = ["sphinx", "jaraco.packaging (>=3.2)", "rst.linker (>=1.9)"]
 testing = ["jaraco.itertools", "func-timeout"]
 
 [metadata]
-content-hash = "e7635656926137a23ab4c93903bbb23971760a28f245a7a4f5ba061085935cf3"
+content-hash = "57643238c08e32ef3f238dcfe01f11919a56eb2407e8f633a1b0bf32b3f1c465"
 python-versions = "^3.6"
 
 [metadata.files]
@@ -711,8 +711,8 @@ coverage = [
     {file = "coverage-5.0.3.tar.gz", hash = "sha256:77afca04240c40450c331fa796b3eab6f1e15c5ecf8bf2b8bee9706cd5452fef"},
 ]
 dparse = [
-    {file = "dparse-0.4.1-py2-none-any.whl", hash = "sha256:cef95156fa0adedaf042cd42f9990974bec76f25dfeca4dc01f381a243d5aa5b"},
-    {file = "dparse-0.4.1.tar.gz", hash = "sha256:00a5fdfa900629e5159bf3600d44905b333f4059a3366f28e0dbd13eeab17b19"},
+    {file = "dparse-0.5.1-py3-none-any.whl", hash = "sha256:e953a25e44ebb60a5c6efc2add4420c177f1d8404509da88da9729202f306994"},
+    {file = "dparse-0.5.1.tar.gz", hash = "sha256:a1b5f169102e1c894f9a7d5ccf6f9402a836a5d24be80a986c7ce9eaed78f367"},
 ]
 entrypoints = [
     {file = "entrypoints-0.3-py2.py3-none-any.whl", hash = "sha256:589f874b313739ad35be6e0cd7efde2a4e9b6fea91edcc34e58ecbb8dbe56d19"},
@@ -883,8 +883,8 @@ requests = [
     {file = "requests-2.23.0.tar.gz", hash = "sha256:b3f43d496c6daba4493e7c431722aeb7dbc6288f52a6e04e7b6023b0247817e6"},
 ]
 safety = [
-    {file = "safety-1.8.7-py2.py3-none-any.whl", hash = "sha256:05f77773bbab834502328b29ed013677aa53ed0c22b6e330aef7d2a7e1dfd838"},
-    {file = "safety-1.8.7.tar.gz", hash = "sha256:3016631e0dd17193d6cf12e8ed1af92df399585e8ee0e4b1300d9e7e32b54903"},
+    {file = "safety-1.9.0-py2.py3-none-any.whl", hash = "sha256:86c1c4a031fe35bd624fce143fbe642a0234d29f7cbf7a9aa269f244a955b087"},
+    {file = "safety-1.9.0.tar.gz", hash = "sha256:23bf20690d4400edc795836b0c983c2b4cbbb922233108ff925b7dd7750f00c9"},
 ]
 six = [
     {file = "six-1.14.0-py2.py3-none-any.whl", hash = "sha256:8f3cd2e254d8f793e7f3d6d9df77b92252b52637291d0f0da013c76ea2724b6c"},
