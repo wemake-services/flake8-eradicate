@@ -33,7 +33,7 @@ class Checker(object):
     version = pkg_version
     _error_template = 'E800: Found commented out code'
 
-    options = None  # type: ignore
+    options = None
 
     def __init__(self, physical_line, tokens) -> None:
         """
@@ -43,7 +43,9 @@ class Checker(object):
         """
         self._physical_line = physical_line
         self._tokens = tokens
-        self._options = _Options(aggressive=self.options.eradicate_aggressive)
+        self._options = _Options(
+            aggressive=self.options.eradicate_aggressive,  # type: ignore
+        )
 
     @classmethod
     def add_options(cls, parser: OptionManager) -> None:
