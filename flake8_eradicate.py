@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 
 import tokenize
-from typing import Any, Iterable, Tuple
+from typing import Iterable, Tuple
 
-import attr
 import pkg_resources
 from eradicate import filter_commented_out_code
 from flake8.options.manager import OptionManager
@@ -12,17 +11,19 @@ from flake8.options.manager import OptionManager
 pkg_name = 'flake8-eradicate'
 
 #: We store the version number inside the `pyproject.toml`:
-pkg_version: str = pkg_resources.get_distribution(pkg_name).version
+pkg_version = pkg_resources.get_distribution(pkg_name).version
 
 STDIN = 'stdin'
 
 
-@attr.attrs(frozen=True, auto_attribs=True, slots=True)
-class _Options(object):
+class _Options:
     """Represents ``eradicate`` option object."""
 
-    aggressive: bool = False
-    in_place: bool = False
+    aggressive = False
+    in_place = False
+
+    def __init__(self, aggressive=False) -> None:
+        self.aggressive = aggressive
 
 
 class Checker(object):
@@ -32,7 +33,7 @@ class Checker(object):
     version = pkg_version
     _error_template = 'E800: Found commented out code'
 
-    options: Any  # type: ignore
+    options = None
 
     def __init__(self, physical_line, tokens) -> None:
         """
@@ -42,7 +43,9 @@ class Checker(object):
         """
         self._physical_line = physical_line
         self._tokens = tokens
-        self._options = _Options(aggressive=self.options.eradicate_aggressive)
+        self._options = _Options(
+            aggressive=self.options.eradicate_aggressive,  # type: ignore
+        )
 
     @classmethod
     def add_options(cls, parser: OptionManager) -> None:
