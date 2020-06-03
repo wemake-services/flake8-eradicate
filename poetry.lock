@@ -368,6 +368,18 @@ six = "*"
 
 [[package]]
 category = "dev"
+description = "Object-oriented filesystem paths"
+marker = "python_version < \"3.6\""
+name = "pathlib2"
+optional = false
+python-versions = "*"
+version = "2.3.5"
+
+[package.dependencies]
+six = "*"
+
+[[package]]
+category = "dev"
 description = "Check PEP-8 naming conventions, plugin for flake8"
 name = "pep8-naming"
 optional = false
@@ -457,6 +469,10 @@ wcwidth = "*"
 [package.dependencies.importlib-metadata]
 python = "<3.8"
 version = ">=0.12"
+
+[package.dependencies.pathlib2]
+python = "<3.6"
+version = ">=2.2.0"
 
 [package.extras]
 checkqa-mypy = ["mypy (v0.761)"]
@@ -620,8 +636,8 @@ docs = ["sphinx", "jaraco.packaging (>=3.2)", "rst.linker (>=1.9)"]
 testing = ["pathlib2", "unittest2", "jaraco.itertools", "func-timeout"]
 
 [metadata]
-content-hash = "74b7e42d5bbc2b0851071391badf8fb96eeec91241ef74210d0802395539f00a"
-python-versions = "^3.6"
+content-hash = "7d6a6c89d94a52d714f6b6663995eb16e9648f0841c04ba9f802079ef37f2d5d"
+python-versions = "^3.5"
 
 [metadata.files]
 atomicwrites = [
@@ -784,6 +800,10 @@ mypy-extensions = [
 packaging = [
     {file = "packaging-20.4-py2.py3-none-any.whl", hash = "sha256:998416ba6962ae7fbd6596850b80e17859a5753ba17c32284f67bfff33784181"},
     {file = "packaging-20.4.tar.gz", hash = "sha256:4357f74f47b9c12db93624a82154e9b120fa8293699949152b22065d556079f8"},
+]
+pathlib2 = [
+    {file = "pathlib2-2.3.5-py2.py3-none-any.whl", hash = "sha256:0ec8205a157c80d7acc301c0b18fbd5d44fe655968f5d947b6ecef5290fc35db"},
+    {file = "pathlib2-2.3.5.tar.gz", hash = "sha256:6cd9a47b597b37cc57de1c05e56fb1a1c9cc9fab04fe78c29acd090418529868"},
 ]
 pep8-naming = [
     {file = "pep8-naming-0.10.0.tar.gz", hash = "sha256:f3b4a5f9dd72b991bf7d8e2a341d2e1aa3a884a769b5aaac4f56825c1763bf3a"},
