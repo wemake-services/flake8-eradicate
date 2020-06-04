@@ -3,6 +3,13 @@
 We follow Semantic Versions since the `0.1.0` release.
 
 
+## 0.4.0
+
+### Features
+
+- Adds `python3.5` support
+
+
 ## 0.3.0
 
 ### Features

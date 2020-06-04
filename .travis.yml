@@ -20,7 +20,7 @@ script:
   - poetry run pytest
   - poetry check
   - poetry run pip check
-  - poetry run safety check --bare --full-report
+  - poetry run safety check --full-report
 
 after_success:
   - pip install coveralls
