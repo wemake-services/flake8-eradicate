@@ -4,10 +4,12 @@ class Some(object):
     # typed_property: int = 10
     other_property = 2
 
+# fmt: on
 
 # def function_name():
 #     return None
 
+# fmt: off
 
 # class CommentedClass(object):
 #     def __init__(self, prop: int) -> None:
