@@ -31,7 +31,7 @@ class Checker(object):
 
     name = pkg_name
     version = pkg_version
-    _error_template = 'E800: Found commented out code'
+    _error_template = 'E800 Found commented out code'
 
     options = None
 
