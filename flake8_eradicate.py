@@ -37,17 +37,17 @@ class Checker(object):
             'aggressive': self.options.eradicate_aggressive,  # type: ignore
         }
 
-        self.eradicator = Eradicator()
+        self._eradicator = Eradicator()
 
         whitelist = self.options.eradicate_whitelist  # type: ignore
         whitelist_ext = self.options.eradicate_whitelist_extend  # type: ignore
 
         if whitelist_ext:
-            self.eradicator.update_whitelist(
+            self._eradicator.update_whitelist(
                 whitelist_ext.split('#'), True,
             )
         elif whitelist:
-            self.eradicator.update_whitelist(
+            self._eradicator.update_whitelist(
                 whitelist.split('#'), False,
             )
 
@@ -129,7 +129,7 @@ class Checker(object):
         )
 
         if comment_in_line:
-            filtered_source = ''.join(self.eradicator.filter_commented_out_code(
+            filtered_source = ''.join(self._eradicator.filter_commented_out_code(
                 self._physical_line,
                 self._options['aggressive'],
             ))
