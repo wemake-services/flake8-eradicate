@@ -41,7 +41,7 @@ classifiers = [
 E8 = "flake8_eradicate:Checker"
 
 [tool.poetry.dependencies]
-python = "^3.5"
+python = "^3.6"
 
 flake8 = "^3.5"
 eradicate = "^2.0"
