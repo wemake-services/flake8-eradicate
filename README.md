@@ -36,6 +36,8 @@ flake8 your_module.py
 ## Options
 
 - `--eradicate-aggressive` to enable aggressive mode from `eradicate`, can lead to false positives
+- `--eradicate-whitelist` to overwrite the whitelist from `eradicate` (`#` separated list)
+- `--eradicate-whitelist-extend` to extend the whitelist from `eradicate` (`#` separated list)
 
 
 ## Error codes

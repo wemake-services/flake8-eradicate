@@ -4,7 +4,7 @@ import tokenize
 from typing import Iterable, Tuple
 
 import pkg_resources
-from eradicate import filter_commented_out_code
+from eradicate import Eradicator
 from flake8.options.manager import OptionManager
 
 #: This is a name that we use to install this library:
@@ -14,16 +14,6 @@ pkg_name = 'flake8-eradicate'
 pkg_version = pkg_resources.get_distribution(pkg_name).version
 
 STDIN = 'stdin'
-
-
-class _Options:
-    """Represents ``eradicate`` option object."""
-
-    aggressive = False
-    in_place = False
-
-    def __init__(self, aggressive=False) -> None:
-        self.aggressive = aggressive
 
 
 class Checker(object):
@@ -43,9 +33,23 @@ class Checker(object):
         """
         self._physical_line = physical_line
         self._tokens = tokens
-        self._options = _Options(
-            aggressive=self.options.eradicate_aggressive,  # type: ignore
-        )
+        self._options = {
+            'aggressive': self.options.eradicate_aggressive,  # type: ignore
+        }
+
+        self._eradicator = Eradicator()
+
+        whitelist = self.options.eradicate_whitelist  # type: ignore
+        whitelist_ext = self.options.eradicate_whitelist_extend  # type: ignore
+
+        if whitelist_ext:
+            self._eradicator.update_whitelist(
+                whitelist_ext.split('#'), True,
+            )
+        elif whitelist:
+            self._eradicator.update_whitelist(
+                whitelist.split('#'), False,
+            )
 
     @classmethod
     def add_options(cls, parser: OptionManager) -> None:
@@ -66,6 +70,31 @@ class Checker(object):
                 'this may result in false positives'
             ),
             action='store_true',
+            parse_from_config=True,
+        )
+        parser.add_option(
+            '--eradicate-whitelist',
+            default=False,
+            help=(
+                'String of "#" separated comment beginnings to whitelist '
+                'for eradicate. '
+                'Single parts are interpreted as regex. '
+                'OVERWRITING the default whitelist: {0}'
+            ).format(Eradicator.DEFAULT_WHITELIST),
+            action='store',
+            parse_from_config=True,
+        )
+        parser.add_option(
+            '--eradicate-whitelist-extend',
+            default=False,
+            help=(
+                'String of "#" separated comment beginnings to whitelist '
+                'for eradicate. '
+                'Single parts are interpreted as regex. '
+                'Overwrites --eradicate-whitelist. '
+                'EXTENDING the default whitelist: {0} '
+            ).format(Eradicator.DEFAULT_WHITELIST),
+            action='store',
             parse_from_config=True,
         )
 
@@ -100,9 +129,11 @@ class Checker(object):
         )
 
         if comment_in_line:
-            filtered_source = ''.join(filter_commented_out_code(
-                self._physical_line,
-                self._options,
-            ))
+            filtered_source = ''.join(
+                self._eradicator.filter_commented_out_code(
+                    self._physical_line,
+                    self._options['aggressive'],
+                ),
+            )
             return self._physical_line != filtered_source
         return False
