@@ -129,9 +129,11 @@ class Checker(object):
         )
 
         if comment_in_line:
-            filtered_source = ''.join(self._eradicator.filter_commented_out_code(
-                self._physical_line,
-                self._options['aggressive'],
-            ))
+            filtered_source = ''.join(
+                self._eradicator.filter_commented_out_code(
+                    self._physical_line,
+                    self._options['aggressive'],
+                ),
+            )
             return self._physical_line != filtered_source
         return False
