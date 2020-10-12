@@ -3,6 +3,19 @@
 We follow Semantic Versions since the `0.1.0` release.
 
 
+## 1.0.0
+
+### Features
+
+- Adds `python3.9` support
+- Now using new `eradicate` API
+- Adds `--eradicate-whitelist` and `--eradicate-whitelist-append` options
+
+### Misc
+
+- Moves to Github Actions
+
+
 ## 0.4.0
 
 ### Features
