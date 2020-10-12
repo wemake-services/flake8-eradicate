@@ -5,7 +5,7 @@ build-backend = "poetry.masonry.api"
 
 [tool.poetry]
 name = "flake8-eradicate"
-version = "0.4.0"
+version = "1.0.0"
 description = "Flake8 plugin to find commented out code"
 
 license = "MIT"
@@ -28,7 +28,7 @@ keywords = [
 ]
 
 classifiers = [
-  "Development Status :: 4 - Beta",
+  "Development Status :: 5 - Stable",
   "Environment :: Console",
   "Framework :: Flake8",
   "Intended Audience :: Developers",
@@ -65,7 +65,8 @@ flake8-super-call = "^1.0"
 flake8-debugger = "^3.2"
 flake8-isort = "^4.0"
 pep8-naming = "^0.11"
-zipp = "3.3.0"
 
 mypy = "^0.790"
 safety = "^1.9"
+
+zipp = "3.3.0"
