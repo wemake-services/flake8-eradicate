@@ -49,7 +49,7 @@ attrs = "*"
 
 [tool.poetry.dev-dependencies]
 pytest-cov = "^2.10"
-pytest-randomly = "^3.4"
+pytest-randomly = "^3.5"
 pytest = "^6.1"
 
 flake8-print = "^3.1"
