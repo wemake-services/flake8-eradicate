@@ -52,7 +52,7 @@ pytest-cov = "^2.10"
 pytest-randomly = "^3.5"
 pytest = "^6.1"
 
-flake8-print = "^3.1"
+flake8-print = "^4.0"
 flake8-builtins = "^1.5"
 flake8-commas = "^2.0"
 flake8-quotes = "^3.2"
