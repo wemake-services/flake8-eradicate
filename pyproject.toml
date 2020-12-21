@@ -67,6 +67,6 @@ flake8-isort = "^4.0"
 pep8-naming = "^0.11"
 
 mypy = "^0.790"
-safety = "^1.9"
+safety = "^1.10"
 
 zipp = "3.4.0"
