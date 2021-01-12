@@ -16,8 +16,8 @@ authors = [
 
 readme = "README.md"
 
-repository = "https://github.com/sobolevn/flake8-eradicate"
-homepage = "https://github.com/sobolevn/flake8-eradicate"
+repository = "https://github.com/wemake-services/flake8-eradicate"
+homepage = "https://github.com/wemake-services/flake8-eradicate"
 
 keywords = [
   "flake8",
