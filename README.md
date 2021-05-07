@@ -50,7 +50,8 @@ flake8 your_module.py
 
 ## Output example
 
-Here's how output looks like (we are using [`wemake` formatter](https://wemake-python-stylegui.de/en/latest/pages/formatter.html)):
+Here's how output looks like (we are using [`wemake` formatter](https://wemake-python-stylegui.de/en/latest/pages/usage/formatter.html)):
+
 
 ![flake8-eradicate output](https://raw.githubusercontent.com/wemake-services/flake8-eradicate/master/eradicate.png)
 
