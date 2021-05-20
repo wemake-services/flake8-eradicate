@@ -25,14 +25,9 @@ class Checker(object):
 
     options = None
 
-    def __init__(self, physical_line, tokens) -> None:
-        """
-        Creates new checker instance.
+    def __init__(self, tree, filename: str):
+        self.filename = filename
 
-        When performance will be an issue - we can refactor it.
-        """
-        self._physical_line = physical_line
-        self._tokens = tokens
         self._options = {
             'aggressive': self.options.eradicate_aggressive,  # type: ignore
         }
@@ -103,14 +98,14 @@ class Checker(object):
         """Parses registered options for providing them to each visitor."""
         cls.options = options
 
-    def __iter__(self) -> Iterable[Tuple[int, str]]:
+    def run(self) -> Iterable[Tuple[int, str]]:
         """Runs on each step of flake8."""
-        if self._contains_commented_out_code():
-            yield (1, self._error_template)
+        for line_no in self._lines_with_commented_out_code():
+            yield line_no, 0, self._error_template, type(self)
 
-    def _contains_commented_out_code(self) -> bool:
+    def _lines_with_commented_out_code(self) -> Iterable[int]:
         """
-        Check if the current physical line contains commented out code.
+        Yield the physical line number that contain commented out code.
 
         This test relies on eradicate function to remove commented out code
         from a physical line.
@@ -121,19 +116,19 @@ class Checker(object):
         To prevent this false-positive, the tokens of the physical line are
         checked for a comment. The eradicate function is only invokes,
         when the tokens indicate a comment in the physical line.
-
         """
-        comment_in_line = any(
-            token_type == tokenize.COMMENT
-            for token_type, _, _, _, _ in self._tokens
-        )
+        with open(self.filename) as f:
+            file_tokens = tokenize.generate_tokens(f.readline)
+            comment_in_file = any(token.type == tokenize.COMMENT for token in file_tokens)
 
-        if comment_in_line:
-            filtered_source = ''.join(
-                self._eradicator.filter_commented_out_code(
-                    self._physical_line,
-                    self._options['aggressive'],
-                ),
-            )
-            return self._physical_line != filtered_source
-        return False
+            if comment_in_file:
+                f.seek(0)   # rewind file
+                for line_no, line in enumerate(f.readlines(), start=1):
+                    filtered_source = ''.join(
+                        self._eradicator.filter_commented_out_code(
+                            line,
+                            self._options['aggressive'],
+                        ),
+                    )
+                    if line != filtered_source:
+                        yield line_no
