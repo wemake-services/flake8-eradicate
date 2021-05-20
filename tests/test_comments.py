@@ -130,11 +130,19 @@ def test_incorrect_fixture_whitelist_extend(absolute_path):
         assert b'# typed_property: int = 10' in stdout
 
 
-def test__lines_with_commented_out_code_incorrect_fixture_output(absolute_path):
+def test_lines_with_commented_out_code_incorrect_fixture_output(absolute_path):
+    """Verify central underlying method is returning correct output."""
     filename = absolute_path('fixtures', 'incorrect.py')
 
-    OptionsStub = namedtuple('Options', 'eradicate_aggressive eradicate_whitelist eradicate_whitelist_extend')
-    Checker.options = OptionsStub(eradicate_aggressive=True, eradicate_whitelist=False, eradicate_whitelist_extend=False)
+    OptionsStub = namedtuple(
+        'Options',
+        'eradicate_aggressive eradicate_whitelist eradicate_whitelist_extend'
+    )
+    Checker.options = OptionsStub(
+        eradicate_aggressive=True,
+        eradicate_whitelist=False,
+        eradicate_whitelist_extend=False
+    )
 
     checker = Checker(tree=None, filename=filename)
     output = list(checker._lines_with_commented_out_code())

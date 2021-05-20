@@ -25,7 +25,7 @@ class Checker(object):
 
     options = None
 
-    def __init__(self, tree, filename: str):
+    def __init__(self, tree, filename: str):    # noqa: D107
         self.filename = filename
 
         self._options = {
@@ -119,7 +119,10 @@ class Checker(object):
         """
         with open(self.filename) as f:
             file_tokens = tokenize.generate_tokens(f.readline)
-            comment_in_file = any(token.type == tokenize.COMMENT for token in file_tokens)
+            comment_in_file = any(
+                token.type == tokenize.COMMENT
+                for token in file_tokens
+            )
 
             if comment_in_file:
                 f.seek(0)   # rewind file
