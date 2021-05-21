@@ -136,12 +136,12 @@ def test_lines_with_commented_out_code_incorrect_fixture_output(absolute_path):
 
     OptionsStub = namedtuple(
         'Options',
-        'eradicate_aggressive eradicate_whitelist eradicate_whitelist_extend'
+        'eradicate_aggressive eradicate_whitelist eradicate_whitelist_extend',
     )
     Checker.options = OptionsStub(
         eradicate_aggressive=True,
         eradicate_whitelist=False,
-        eradicate_whitelist_extend=False
+        eradicate_whitelist_extend=False,
     )
 
     checker = Checker(tree=None, filename=filename)
@@ -150,3 +150,25 @@ def test_lines_with_commented_out_code_incorrect_fixture_output(absolute_path):
         assert output == [3, 4, 9, 10, 14, 15, 16, 18, 19, 21, 22, 24, 25]
     else:
         assert output == [3, 9, 10, 14, 15, 16, 18, 19, 21, 22, 24, 25]
+
+
+def test_lines_with_commented_out_code_file_without_comment_output(
+    absolute_path,
+):
+    """Verify central underlying method is returning correct output
+    and skips python file encoding first line"""
+    filename = absolute_path('fixtures', 'correct_no_comment.py')
+
+    OptionsStub = namedtuple(
+        'Options',
+        'eradicate_aggressive eradicate_whitelist eradicate_whitelist_extend',
+    )
+    Checker.options = OptionsStub(
+        eradicate_aggressive=True,
+        eradicate_whitelist=False,
+        eradicate_whitelist_extend=False,
+    )
+
+    checker = Checker(tree=None, filename=filename)
+    output = list(checker._lines_with_commented_out_code())
+    assert output == []

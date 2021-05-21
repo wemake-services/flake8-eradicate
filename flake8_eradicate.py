@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
+import ast
 import tokenize
-from typing import Iterable, Tuple
+from typing import Iterable, Iterator, Tuple, Type
 
 import pkg_resources
 from eradicate import Eradicator
@@ -25,7 +26,15 @@ class Checker(object):
 
     options = None
 
-    def __init__(self, tree, filename: str):    # noqa: D107
+    def __init__(self, tree: ast.AST, filename: str):
+        """
+        ``flake8`` plugin constructor.
+
+        Arguments:
+            tree: the file abstract syntax tree.
+            filename: the name of the file to process
+
+        """
         self.filename = filename
 
         self._options = {
@@ -98,7 +107,7 @@ class Checker(object):
         """Parses registered options for providing them to each visitor."""
         cls.options = options
 
-    def run(self) -> Iterable[Tuple[int, str]]:
+    def run(self) -> Iterator[Tuple[int, int, str, Type['Checker']]]:
         """Runs on each step of flake8."""
         for line_no in self._lines_with_commented_out_code():
             yield line_no, 0, self._error_template, type(self)
@@ -118,6 +127,12 @@ class Checker(object):
         when the tokens indicate a comment in the physical line.
         """
         with open(self.filename) as f:
+            # Skip python commented encoding line
+            first_line = f.readline()
+            if not first_line.startswith('# -*- coding:'):
+                # rewind as we don't want to skip it during tokenization
+                f.seek(0)
+
             file_tokens = tokenize.generate_tokens(f.readline)
             comment_in_file = any(
                 token.type == tokenize.COMMENT
@@ -125,7 +140,7 @@ class Checker(object):
             )
 
             if comment_in_file:
-                f.seek(0)   # rewind file
+                f.seek(0)
                 for line_no, line in enumerate(f.readlines(), start=1):
                     filtered_source = ''.join(
                         self._eradicator.filter_commented_out_code(
