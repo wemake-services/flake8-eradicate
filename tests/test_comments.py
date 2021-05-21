@@ -155,8 +155,7 @@ def test_lines_with_commented_out_code_incorrect_fixture_output(absolute_path):
 def test_lines_with_commented_out_code_file_without_comment_output(
     absolute_path,
 ):
-    """Verify central underlying method is returning correct output
-    and skips python file encoding first line"""
+    """Make sure file without comment are ignored."""
     filename = absolute_path('fixtures', 'correct_no_comment.py')
 
     OptionsStub = namedtuple(
