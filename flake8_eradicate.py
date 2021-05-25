@@ -2,7 +2,7 @@
 
 import ast
 import tokenize
-from typing import Iterable, Iterator, Tuple, Type
+from typing import Iterable, Iterator, List, Tuple, Type
 
 import pkg_resources
 from eradicate import Eradicator
@@ -26,16 +26,21 @@ class Checker(object):
 
     options = None
 
-    def __init__(self, tree: ast.AST, filename: str):
+    def __init__(
+        self, tree: ast.AST,
+        filename: str,
+        file_tokens: List[tokenize.TokenInfo],
+    ):
         """
         ``flake8`` plugin constructor.
 
         Arguments:
             tree: the file abstract syntax tree.
             filename: the name of the file to process
-
+            file_tokens: file tokens
         """
         self.filename = filename
+        self.file_tokens = file_tokens
 
         self._options = {
             'aggressive': self.options.eradicate_aggressive,  # type: ignore
@@ -127,16 +132,9 @@ class Checker(object):
         when the tokens indicate a comment in the physical line.
         """
         with open(self.filename) as f:
-            # Skip python commented encoding line
-            first_line = f.readline()
-            if not first_line.startswith('# -*- coding:'):
-                # rewind as we don't want to skip it during tokenization
-                f.seek(0)
-
-            file_tokens = tokenize.generate_tokens(f.readline)
             comment_in_file = any(
                 token.type == tokenize.COMMENT
-                for token in file_tokens
+                for token in self.file_tokens
             )
 
             if comment_in_file:

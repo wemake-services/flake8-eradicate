@@ -2,11 +2,17 @@
 
 import subprocess
 import sys
+import tokenize
 from collections import namedtuple
 
 from flake8_eradicate import Checker
 
 PY_GTE_36 = sys.version_info >= (3, 6)
+
+
+def _get_file_tokens(filename: str):
+    with open(filename) as f:
+        return list(tokenize.generate_tokens(f.readline))
 
 
 def test_correct_fixture(absolute_path):
@@ -144,7 +150,11 @@ def test_lines_with_commented_out_code_incorrect_fixture_output(absolute_path):
         eradicate_whitelist_extend=False,
     )
 
-    checker = Checker(tree=None, filename=filename)
+    checker = Checker(
+        tree=None,
+        filename=filename,
+        file_tokens=_get_file_tokens(filename),
+    )
     output = list(checker._lines_with_commented_out_code())
     if PY_GTE_36:
         assert output == [3, 4, 9, 10, 14, 15, 16, 18, 19, 21, 22, 24, 25]
@@ -152,7 +162,7 @@ def test_lines_with_commented_out_code_incorrect_fixture_output(absolute_path):
         assert output == [3, 9, 10, 14, 15, 16, 18, 19, 21, 22, 24, 25]
 
 
-def test_lines_with_commented_out_code_file_without_comment_output(
+def test_lines_with_commented_out_code_file_no_comment(
     absolute_path,
 ):
     """Make sure file without comment are ignored."""
@@ -168,6 +178,10 @@ def test_lines_with_commented_out_code_file_without_comment_output(
         eradicate_whitelist_extend=False,
     )
 
-    checker = Checker(tree=None, filename=filename)
+    checker = Checker(
+        tree=None,
+        filename=filename,
+        file_tokens=_get_file_tokens(filename),
+    )
     output = list(checker._lines_with_commented_out_code())
     assert output == []
