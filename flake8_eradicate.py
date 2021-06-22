@@ -1,8 +1,5 @@
-# -*- coding: utf-8 -*-
-
-import ast
 import tokenize
-from typing import Iterable, Iterator, List, Tuple, Type
+from typing import Iterable, Iterator, List, Sequence, Tuple, Type
 
 import pkg_resources
 from eradicate import Eradicator
@@ -14,6 +11,7 @@ pkg_name = 'flake8-eradicate'
 #: We store the version number inside the `pyproject.toml`:
 pkg_version = pkg_resources.get_distribution(pkg_name).version
 
+#: Const for `stdin` mode of `flake8`:
 STDIN = 'stdin'
 
 
@@ -22,26 +20,27 @@ class Checker(object):
 
     name = pkg_name
     version = pkg_version
+
     _error_template = 'E800 Found commented out code'
 
     options = None
 
     def __init__(
-        self, tree: ast.AST,
-        filename: str,
+        self,
+        tree,  # that's the hack we use to trigger this check
         file_tokens: List[tokenize.TokenInfo],
-    ):
+        lines: Sequence[str],
+    ) -> None:
         """
         ``flake8`` plugin constructor.
 
         Arguments:
-            tree: the file abstract syntax tree.
-            filename: the name of the file to process
-            file_tokens: file tokens
-        """
-        self.filename = filename
-        self.file_tokens = file_tokens
+            file_tokens: all tokens for this file.
+            lines: all file lines.
 
+        """
+        self._file_tokens = file_tokens
+        self._lines = lines
         self._options = {
             'aggressive': self.options.eradicate_aggressive,  # type: ignore
         }
@@ -53,11 +52,13 @@ class Checker(object):
 
         if whitelist_ext:
             self._eradicator.update_whitelist(
-                whitelist_ext.split('#'), True,
+                whitelist_ext.split('#'),
+                extend_default=True,
             )
         elif whitelist:
             self._eradicator.update_whitelist(
-                whitelist.split('#'), False,
+                whitelist.split('#'),
+                extend_default=False,
             )
 
     @classmethod
@@ -131,20 +132,18 @@ class Checker(object):
         checked for a comment. The eradicate function is only invokes,
         when the tokens indicate a comment in the physical line.
         """
-        with open(self.filename) as f:
-            comment_in_file = any(
-                token.type == tokenize.COMMENT
-                for token in self.file_tokens
-            )
+        comment_in_file = any(
+            token.type == tokenize.COMMENT
+            for token in self._file_tokens
+        )
 
-            if comment_in_file:
-                f.seek(0)
-                for line_no, line in enumerate(f.readlines(), start=1):
-                    filtered_source = ''.join(
-                        self._eradicator.filter_commented_out_code(
-                            line,
-                            self._options['aggressive'],
-                        ),
-                    )
-                    if line != filtered_source:
-                        yield line_no
+        if comment_in_file:
+            for line_no, line in enumerate(self._lines):
+                filtered_source = ''.join(
+                    self._eradicator.filter_commented_out_code(
+                        line,
+                        aggressive=self._options['aggressive'],
+                    ),
+                )
+                if line != filtered_source:
+                    yield line_no + 1

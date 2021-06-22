@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 import subprocess
 
 from flake8_eradicate import pkg_name, pkg_version

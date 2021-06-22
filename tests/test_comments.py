@@ -1,18 +1,10 @@
-# -*- coding: utf-8 -*-
-
 import subprocess
 import sys
-import tokenize
 from collections import namedtuple
 
 from flake8_eradicate import Checker
 
 PY_GTE_36 = sys.version_info >= (3, 6)
-
-
-def _get_file_tokens(filename: str):
-    with open(filename) as f:
-        return list(tokenize.generate_tokens(f.readline))
 
 
 def test_correct_fixture(absolute_path):
@@ -136,7 +128,11 @@ def test_incorrect_fixture_whitelist_extend(absolute_path):
         assert b'# typed_property: int = 10' in stdout
 
 
-def test_lines_with_commented_out_code_incorrect_fixture_output(absolute_path):
+def test_lines_with_commented_out_code_incorrect_fixture_output(
+    absolute_path,
+    get_file_lines,
+    get_file_tokens,
+):
     """Verify central underlying method is returning correct output."""
     filename = absolute_path('fixtures', 'incorrect.py')
 
@@ -152,8 +148,8 @@ def test_lines_with_commented_out_code_incorrect_fixture_output(absolute_path):
 
     checker = Checker(
         tree=None,
-        filename=filename,
-        file_tokens=_get_file_tokens(filename),
+        lines=get_file_lines(filename),
+        file_tokens=get_file_tokens(filename),
     )
     output = list(checker._lines_with_commented_out_code())
     if PY_GTE_36:
@@ -164,6 +160,8 @@ def test_lines_with_commented_out_code_incorrect_fixture_output(absolute_path):
 
 def test_lines_with_commented_out_code_file_no_comment(
     absolute_path,
+    get_file_tokens,
+    get_file_lines,
 ):
     """Make sure file without comment are ignored."""
     filename = absolute_path('fixtures', 'correct_no_comment.py')
@@ -180,8 +178,8 @@ def test_lines_with_commented_out_code_file_no_comment(
 
     checker = Checker(
         tree=None,
-        filename=filename,
-        file_tokens=_get_file_tokens(filename),
+        lines=get_file_lines(filename),
+        file_tokens=get_file_tokens(filename),
     )
     output = list(checker._lines_with_commented_out_code())
     assert output == []

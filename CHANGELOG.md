@@ -3,6 +3,13 @@
 We follow Semantic Versions since the `0.1.0` release.
 
 
+## 1.1.0
+
+### Features
+
+- Imrpoves performance on long files #210
+
+
 ## 1.0.0
 
 ### Features
