@@ -1,7 +1,5 @@
-# -*- coding: utf-8 -*-
-
 import tokenize
-from typing import Iterable, Tuple
+from typing import Iterable, Iterator, List, Sequence, Tuple, Type
 
 import pkg_resources
 from eradicate import Eradicator
@@ -13,6 +11,7 @@ pkg_name = 'flake8-eradicate'
 #: We store the version number inside the `pyproject.toml`:
 pkg_version = pkg_resources.get_distribution(pkg_name).version
 
+#: Const for `stdin` mode of `flake8`:
 STDIN = 'stdin'
 
 
@@ -21,18 +20,27 @@ class Checker(object):
 
     name = pkg_name
     version = pkg_version
+
     _error_template = 'E800 Found commented out code'
 
     options = None
 
-    def __init__(self, physical_line, tokens) -> None:
+    def __init__(
+        self,
+        tree,  # that's the hack we use to trigger this check
+        file_tokens: List[tokenize.TokenInfo],
+        lines: Sequence[str],
+    ) -> None:
         """
-        Creates new checker instance.
+        ``flake8`` plugin constructor.
 
-        When performance will be an issue - we can refactor it.
+        Arguments:
+            file_tokens: all tokens for this file.
+            lines: all file lines.
+
         """
-        self._physical_line = physical_line
-        self._tokens = tokens
+        self._file_tokens = file_tokens
+        self._lines = lines
         self._options = {
             'aggressive': self.options.eradicate_aggressive,  # type: ignore
         }
@@ -44,11 +52,13 @@ class Checker(object):
 
         if whitelist_ext:
             self._eradicator.update_whitelist(
-                whitelist_ext.split('#'), True,
+                whitelist_ext.split('#'),
+                extend_default=True,
             )
         elif whitelist:
             self._eradicator.update_whitelist(
-                whitelist.split('#'), False,
+                whitelist.split('#'),
+                extend_default=False,
             )
 
     @classmethod
@@ -103,14 +113,14 @@ class Checker(object):
         """Parses registered options for providing them to each visitor."""
         cls.options = options
 
-    def __iter__(self) -> Iterable[Tuple[int, str]]:
+    def run(self) -> Iterator[Tuple[int, int, str, Type['Checker']]]:
         """Runs on each step of flake8."""
-        if self._contains_commented_out_code():
-            yield (1, self._error_template)
+        for line_no in self._lines_with_commented_out_code():
+            yield line_no, 0, self._error_template, type(self)
 
-    def _contains_commented_out_code(self) -> bool:
+    def _lines_with_commented_out_code(self) -> Iterable[int]:
         """
-        Check if the current physical line contains commented out code.
+        Yield the physical line number that contain commented out code.
 
         This test relies on eradicate function to remove commented out code
         from a physical line.
@@ -121,19 +131,19 @@ class Checker(object):
         To prevent this false-positive, the tokens of the physical line are
         checked for a comment. The eradicate function is only invokes,
         when the tokens indicate a comment in the physical line.
-
         """
-        comment_in_line = any(
-            token_type == tokenize.COMMENT
-            for token_type, _, _, _, _ in self._tokens
+        comment_in_file = any(
+            token.type == tokenize.COMMENT
+            for token in self._file_tokens
         )
 
-        if comment_in_line:
-            filtered_source = ''.join(
-                self._eradicator.filter_commented_out_code(
-                    self._physical_line,
-                    self._options['aggressive'],
-                ),
-            )
-            return self._physical_line != filtered_source
-        return False
+        if comment_in_file:
+            for line_no, line in enumerate(self._lines):
+                filtered_source = ''.join(
+                    self._eradicator.filter_commented_out_code(
+                        line,
+                        aggressive=self._options['aggressive'],
+                    ),
+                )
+                if line != filtered_source:
+                    yield line_no + 1
