@@ -48,7 +48,7 @@ eradicate = "^2.0"
 attrs = "*"
 
 [tool.poetry.dev-dependencies]
-pytest-cov = "^2.12"
+pytest-cov = "^3.0"
 pytest-randomly = "^3.8"
 pytest = "^6.2"
 
