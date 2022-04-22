@@ -46,6 +46,7 @@ python = "^3.6"
 flake8 = ">=3.5,<5"
 eradicate = "^2.0"
 attrs = "*"
+setuptools = "*"
 
 [tool.poetry.dev-dependencies]
 pytest-cov = "^3.0"
