@@ -3,7 +3,7 @@
 We follow Semantic Versions since the `0.1.0` release.
 
 
-## [Unreleased]
+## 1.2.1
 
 ### Bugfixes
 
