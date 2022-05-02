@@ -216,7 +216,7 @@ flake8 = "*"
 
 [[package]]
 name = "flake8-print"
-version = "4.0.0"
+version = "4.0.1"
 description = "print statement checker plugin for flake8"
 category = "dev"
 optional = false
@@ -731,8 +731,8 @@ flake8-polyfill = [
     {file = "flake8_polyfill-1.0.2-py2.py3-none-any.whl", hash = "sha256:12be6a34ee3ab795b19ca73505e7b55826d5f6ad7230d31b18e106400169b9e9"},
 ]
 flake8-print = [
-    {file = "flake8-print-4.0.0.tar.gz", hash = "sha256:5afac374b7dc49aac2c36d04b5eb1d746d72e6f5df75a6ecaecd99e9f79c6516"},
-    {file = "flake8_print-4.0.0-py3-none-any.whl", hash = "sha256:6c0efce658513169f96d7a24cf136c434dc711eb00ebd0a985eb1120103fe584"},
+    {file = "flake8-print-4.0.1.tar.gz", hash = "sha256:12b3c3bf65329d8ca9acde949fb3b932ec113e9e5ffa6cb7cd55a7dbcd67dae1"},
+    {file = "flake8_print-4.0.1-py3-none-any.whl", hash = "sha256:e246bcd5b07d5259af460b7eff148052c49114640380d7f22340f30920fabf02"},
 ]
 flake8-quotes = [
     {file = "flake8-quotes-3.3.1.tar.gz", hash = "sha256:633adca6fb8a08131536af0d750b44d6985b9aba46f498871e21588c3e6f525a"},
