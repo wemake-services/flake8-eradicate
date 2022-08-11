@@ -3,6 +3,13 @@
 We follow Semantic Versions since the `0.1.0` release.
 
 
+## 1.3.0
+
+### Features
+
+- Adds `flake8@5.0` support
+
+
 ## 1.2.1
 
 ### Bugfixes
