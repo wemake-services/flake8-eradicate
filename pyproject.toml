@@ -46,7 +46,7 @@ python = "^3.7"
 flake8 = ">=3.5,<6"
 eradicate = "^2.0"
 attrs = "*"
-importlib-metadata = {version = "^4.11.3", python = "<3.8"}
+importlib-metadata = {version = "*", python = "<3.8"}
 
 [tool.poetry.dev-dependencies]
 pytest-cov = "^3.0"
