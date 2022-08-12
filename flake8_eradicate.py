@@ -1,7 +1,11 @@
 import tokenize
 from typing import Iterable, Iterator, List, Sequence, Tuple, Type
 
-import pkg_resources
+try:
+    from importlib.metadata import version as importlib_version
+except ImportError:  # pragma: nocover
+    from importlib_metadata import version as importlib_version
+
 from eradicate import Eradicator
 from flake8.options.manager import OptionManager
 
@@ -9,7 +13,7 @@ from flake8.options.manager import OptionManager
 pkg_name = 'flake8-eradicate'
 
 #: We store the version number inside the `pyproject.toml`:
-pkg_version = pkg_resources.get_distribution(pkg_name).version
+pkg_version = importlib_version(pkg_name)
 
 #: Const for `stdin` mode of `flake8`:
 STDIN = 'stdin'
