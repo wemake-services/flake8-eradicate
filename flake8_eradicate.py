@@ -4,7 +4,7 @@ from typing import Iterable, Iterator, List, Sequence, Tuple, Type
 try:
     from importlib.metadata import version as ilm_version
 except ImportError:  # pragma: nocover
-    from importlib_metadata import version as ilm_version  # type: ignore
+    from importlib_metadata import version as ilm_version
 
 from eradicate import Eradicator
 from flake8.options.manager import OptionManager
