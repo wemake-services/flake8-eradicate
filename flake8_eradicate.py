@@ -16,7 +16,7 @@ from eradicate import Eradicator
 from flake8.options.manager import OptionManager
 
 try:  # pragma: no cover
-    from importlib import metadata as importlib_metadata
+    from importlib import metadata as importlib_metadata  # type: ignore
 except ImportError:  # pragma: no cover
     import importlib_metadata  # type: ignore
 
