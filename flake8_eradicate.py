@@ -1,15 +1,30 @@
 import tokenize
-from typing import Iterable, Iterator, List, Sequence, Tuple, Type
+from typing import (
+    Any,
+    ClassVar,
+    Dict,
+    Iterable,
+    Iterator,
+    List,
+    Optional,
+    Sequence,
+    Tuple,
+    Type,
+)
 
-import pkg_resources
 from eradicate import Eradicator
 from flake8.options.manager import OptionManager
+
+try:  # pragma: no cover
+    from importlib import metadata as importlib_metadata
+except ImportError:  # pragma: no cover
+    import importlib_metadata  # type: ignore
 
 #: This is a name that we use to install this library:
 pkg_name = 'flake8-eradicate'
 
 #: We store the version number inside the `pyproject.toml`:
-pkg_version = pkg_resources.get_distribution(pkg_name).version
+pkg_version = importlib_metadata.version(pkg_name)
 
 #: Const for `stdin` mode of `flake8`:
 STDIN = 'stdin'
@@ -23,7 +38,7 @@ class Checker(object):
 
     _error_template = 'E800 Found commented out code'
 
-    options = None
+    options: ClassVar[Optional[Dict[str, Any]]] = None  # type: ignore
 
     def __init__(
         self,
