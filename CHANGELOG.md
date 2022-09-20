@@ -3,6 +3,18 @@
 We follow Semantic Versions since the `0.1.0` release.
 
 
+## 1.4.0
+
+### Features
+
+- Drops `python3.6` support
+- Switches from `pkg_resources` to `importlib_metadata`
+
+### Misc
+
+- Uses `poetry@1.2`
+
+
 ## 1.3.0
 
 ### Features
