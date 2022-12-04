@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "flake8-eradicate"
-version = "1.4.0"
+version = "1.5.0"
 description = "Flake8 plugin to find commented out code"
 
 license = "MIT"
@@ -36,37 +36,33 @@ classifiers = [
 "Funding" = "https://opencollective.com/wemake-python-styleguide"
 
 [tool.poetry.dependencies]
-python = "^3.7"
-
-flake8 = ">=3.5,<6"
+python = ">=3.8.1"
+flake8 = "^6.0"
 eradicate = "^2.0"
 attrs = "*"
-importlib-metadata = { version = "*", python = "<3.8" }
 
 [tool.poetry.group.test.dependencies]
-pytest-cov = "^3.0"
+pytest-cov = "^4.0"
 pytest-randomly = "^3.10"
 pytest = "^7.0"
 
-flake8-print = "^4.0"
-flake8-builtins = "^1.5"
+flake8-print = "^5.0"
+flake8-builtins = "^2.0"
 flake8-commas = "^2.0"
-flake8-quotes = "^3.2"
 flake8-comprehensions = "^3.5"
 flake8-docstrings = "^1.6"
 flake8-string-format = "^0.3"
-flake8-pep3101 = "^1.3"
+flake8-pep3101 = "^2.0"
 flake8-super-call = "^1.0"
 flake8-debugger = "^4.0"
-flake8-isort = "^4.2"
+flake8-isort = "^5"
 pep8-naming = "^0.13"
 
-mypy = "^0.971"
+mypy = "^0.991"
 safety = "^2.1"
 
 [tool.poetry.plugins."flake8.extension"]
 E8 = "flake8_eradicate:Checker"
-
 
 [build-system]
 requires = ["poetry-core>=1.2.0"]

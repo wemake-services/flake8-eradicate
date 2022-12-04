@@ -1,24 +1,10 @@
 import tokenize
-from typing import (
-    Any,
-    ClassVar,
-    Dict,
-    Iterable,
-    Iterator,
-    List,
-    Optional,
-    Sequence,
-    Tuple,
-    Type,
-)
+from importlib import metadata as importlib_metadata
+from typing import (Any, ClassVar, Dict, Iterable, Iterator, List, Optional,
+                    Sequence, Tuple, Type)
 
 from eradicate import Eradicator
 from flake8.options.manager import OptionManager
-
-try:  # pragma: no cover
-    from importlib import metadata as importlib_metadata  # type: ignore
-except ImportError:  # pragma: no cover
-    import importlib_metadata  # type: ignore
 
 #: This is a name that we use to install this library:
 pkg_name = 'flake8-eradicate'
