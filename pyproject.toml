@@ -36,7 +36,7 @@ classifiers = [
 "Funding" = "https://opencollective.com/wemake-python-styleguide"
 
 [tool.poetry.dependencies]
-python = "^3.7"
+python = ">=3.7"
 
 flake8 = ">=3.5,<6"
 eradicate = "^2.0"
