@@ -1,4 +1,5 @@
 import tokenize
+from importlib import metadata as importlib_metadata
 from typing import (
     Any,
     ClassVar,
@@ -15,19 +16,11 @@ from typing import (
 from eradicate import Eradicator
 from flake8.options.manager import OptionManager
 
-try:  # pragma: no cover
-    from importlib import metadata as importlib_metadata  # type: ignore
-except ImportError:  # pragma: no cover
-    import importlib_metadata  # type: ignore
-
 #: This is a name that we use to install this library:
 pkg_name = 'flake8-eradicate'
 
 #: We store the version number inside the `pyproject.toml`:
 pkg_version = importlib_metadata.version(pkg_name)
-
-#: Const for `stdin` mode of `flake8`:
-STDIN = 'stdin'
 
 
 class Checker(object):

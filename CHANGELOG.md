@@ -3,6 +3,18 @@
 We follow Semantic Versions since the `0.1.0` release.
 
 
+## 1.5.0
+
+### Features
+
+- Drops `python3.7` support, because it has almost reached its EOL
+- Adds `flake8@6` support and drops support of `flake8<5`
+
+### Misc
+
+- Updates many dependencies
+
+
 ## 1.4.0
 
 ### Features
