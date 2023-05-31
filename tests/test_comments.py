@@ -41,10 +41,9 @@ def test_incorrect_fixture(absolute_path):
     )
     stdout, _ = process.communicate()
 
-    assert stdout.count(b'E800') == 6 + int(PY_GTE_36)
+    assert stdout.count(b'E800') == 7
     assert b'# property_name = 1' in stdout
-    if PY_GTE_36:
-        assert b'# typed_property: int = 10' in stdout
+    assert b'# typed_property: int = 10' in stdout
 
 
 def test_incorrect_fixture_aggressive(absolute_path):
