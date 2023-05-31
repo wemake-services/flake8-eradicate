@@ -1,10 +1,7 @@
 import subprocess
-import sys
 from collections import namedtuple
 
 from flake8_eradicate import Checker
-
-PY_GTE_36 = sys.version_info >= (3, 6)
 
 
 def test_correct_fixture(absolute_path):
@@ -44,10 +41,9 @@ def test_incorrect_fixture(absolute_path):
     )
     stdout, _ = process.communicate()
 
-    assert stdout.count(b'E800') == 6 + int(PY_GTE_36)
+    assert stdout.count(b'E800') == 7
     assert b'# property_name = 1' in stdout
-    if PY_GTE_36:
-        assert b'# typed_property: int = 10' in stdout
+    assert b'# typed_property: int = 10' in stdout
 
 
 def test_incorrect_fixture_aggressive(absolute_path):
@@ -67,10 +63,9 @@ def test_incorrect_fixture_aggressive(absolute_path):
         stderr=subprocess.PIPE,
     )
     stdout, _ = process.communicate()
-    assert stdout.count(b'E800') == 12 + int(PY_GTE_36)
+    assert stdout.count(b'E800') == 13
     assert b'# property_name = 1' in stdout
-    if PY_GTE_36:
-        assert b'# typed_property: int = 10' in stdout
+    assert b'# typed_property: int = 10' in stdout
     assert b'# def function_name():' in stdout
     assert b'# class CommentedClass(object):' in stdout
 
@@ -94,12 +89,11 @@ def test_incorrect_fixture_whitelist(absolute_path):
     )
     stdout, _ = process.communicate()
 
-    assert stdout.count(b'E800') == 6 + int(PY_GTE_36) * 3
+    assert stdout.count(b'E800') == 9
     assert b'# property_name = 1' in stdout
-    if PY_GTE_36:
-        assert b'# typed_property: int = 10' in stdout
-        assert b'# fmt: on' in stdout
-        assert b'# fmt: off' in stdout
+    assert b'# typed_property: int = 10' in stdout
+    assert b'# fmt: on' in stdout
+    assert b'# fmt: off' in stdout
 
 
 def test_incorrect_fixture_whitelist_extend(absolute_path):
@@ -121,11 +115,10 @@ def test_incorrect_fixture_whitelist_extend(absolute_path):
     )
     stdout, _ = process.communicate()
 
-    assert stdout.count(b'E800') == 3 + int(PY_GTE_36)
+    assert stdout.count(b'E800') == 4
     assert b'# property_name = 1' in stdout
     assert b'return' not in stdout
-    if PY_GTE_36:
-        assert b'# typed_property: int = 10' in stdout
+    assert b'# typed_property: int = 10' in stdout
 
 
 def test_lines_with_commented_out_code_incorrect_fixture_output(
@@ -152,10 +145,7 @@ def test_lines_with_commented_out_code_incorrect_fixture_output(
         file_tokens=get_file_tokens(filename),
     )
     output = list(checker._lines_with_commented_out_code())
-    if PY_GTE_36:
-        assert output == [3, 4, 9, 10, 14, 15, 16, 18, 19, 21, 22, 24, 25]
-    else:
-        assert output == [3, 9, 10, 14, 15, 16, 18, 19, 21, 22, 24, 25]
+    assert output == [3, 4, 9, 10, 14, 15, 16, 18, 19, 21, 22, 24, 25]
 
 
 def test_lines_with_commented_out_code_file_no_comment(
