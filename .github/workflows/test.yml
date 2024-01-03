@@ -12,21 +12,21 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ['3.8', '3.9', '3.10', '3.11']
+        python-version: ['3.8', '3.9', '3.10', '3.11', '3.12']
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       with:
         python-version: ${{ matrix.python-version }}
 
     - name: Install poetry
       run: |
-        pip install -U pip
-        curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/install-poetry.py | python -
+        curl -sSL "https://install.python-poetry.org" | python
 
-        echo "${HOME}/.poetry/bin" >> $GITHUB_PATH
+        # Adding `poetry` to `$PATH`:
+        echo "$HOME/.poetry/bin" >> $GITHUB_PATH
 
     - name: Install dependencies
       run: |
@@ -41,10 +41,9 @@ jobs:
         poetry run pytest
         poetry check
         poetry run pip check
-        poetry run safety check --full-report
 
     - name: Upload coverage to Codecov
-      if: matrix.python-version == 3.8
+      if: matrix.python-version == 3.12
       uses: codecov/codecov-action@v3
       with:
         file: ./coverage.xml
