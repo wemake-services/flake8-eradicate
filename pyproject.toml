@@ -43,7 +43,7 @@ eradicate = "^2.0"
 attrs = "*"
 
 [tool.poetry.group.test.dependencies]
-pytest = "^7.3"
+pytest = ">=7.3,<9.0"
 pytest-cov = "^4.0"
 pytest-randomly = "^3.12"
 
