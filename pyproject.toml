@@ -44,7 +44,7 @@ attrs = "*"
 
 [tool.poetry.group.test.dependencies]
 pytest = ">=7.3,<9.0"
-pytest-cov = "^4.0"
+pytest-cov = ">=4,<6"
 pytest-randomly = "^3.12"
 
 mypy = "^1.3"
