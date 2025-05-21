@@ -39,7 +39,7 @@ classifiers = [
 python = "^3.8"
 
 flake8 = ">5"
-eradicate = "^2.0"
+eradicate = "^3.0"
 attrs = "*"
 
 [tool.poetry.group.test.dependencies]
