@@ -1,5 +1,5 @@
 import tokenize
-from importlib import metadata as importlib_metadata
+from importlib import metadata
 from typing import (
     Any,
     ClassVar,
@@ -20,7 +20,7 @@ from flake8.options.manager import OptionManager
 pkg_name = 'flake8-eradicate'
 
 #: We store the version number inside the `pyproject.toml`:
-pkg_version = importlib_metadata.version(pkg_name)
+pkg_version = metadata.version(pkg_name)
 
 
 class Checker(object):
